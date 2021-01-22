@@ -3,6 +3,7 @@ import pandas as pd
 
 from trading import maths
 
+
 class TestDivision(unittest.TestCase):
     def setUp(self) -> None:
         # yapf: disable
@@ -29,12 +30,11 @@ class TestDivision(unittest.TestCase):
         actual = pre_sub._is_tab_header_cta_impression_kernel(event_type=None, page_type=None, impressions=None)
         assert actual == 0
 
-
     def test_is_tab_header_cta_impression(self):
-        """Ensures tab header CTA impressions are flagged, user facing function."""
-        mock_df = self.expected_df.drop('is_tab_header_cta_impression')
+        """Ensures we can correctly divide when using a pandas DF."""
+        mock_df = self.expected_df.drop('result')
 
-        actual = pre_sub.is_tab_header_cta_impression(df=mock_df)
+        actual = maths.is_tab_header_cta_impression(df=mock_df)
 
         assert actual.collect() == self.expected_df.collect()
         assert actual.schema.names == self.expected_df.schema.names
