@@ -26,7 +26,7 @@ def divide_kernel(numerator: float, denominator: float) -> float:
 
 
 def divide(df: 'DataFrame', numerator_col: float, denominator_col: float) -> 'DataFrame':
-    """Maps a 0-1 column that indicates which events are an impression for the tab header CTA.
+    """Divides one number by another.
 
     Args:
         df: the dataframe to append a column onto
