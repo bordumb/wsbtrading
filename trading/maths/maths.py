@@ -45,5 +45,5 @@ def divide(df: 'DataFrame', numerator_col: float, denominator_col: float) -> 'Da
     """
     check_columns(dataframe=df, required_columns=[numerator_col, denominator_col])
 
-    df['result'] = divide_kernel(numerator=numerator_col, denominator=denominator_col)
+    df['result'] = df[numerator_col] / df[denominator_col]
     return df
