@@ -1,8 +1,13 @@
+__version__ = '1.0.0a55'
+
+__doc__ = """``Trading`` is a module with functions for data I/O, aggregation, modeling, and placing trades online"""
+
 import logging
+import uuid
 
-from trading._version import get_versions
+def load_logging_config():
+    logging.basicConfig(format='%(asctime)s - %(name)s - [%(levelname)s] - %(message)s')
 
-__version__ = get_versions()['version']
-del get_versions
 
-logger = logging.getLogger(__name__)
+def generate_staging_version() -> str:
+    return __version__ + '_' + uuid.uuid4().hex[:8]
