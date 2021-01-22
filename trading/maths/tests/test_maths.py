@@ -9,7 +9,7 @@ from trading import maths
 class TestDivision(unittest.TestCase):
     def setUp(self) -> None:
         # yapf: disable
-        schema = ['timestamp', 'high', 'low', 'result']
+        schema = ['timestamp', 'low', 'high', 'low_per_high']
         data = [
             (1, 1, 1, 1),
             (2, 1, 2, 0.5),
@@ -32,8 +32,8 @@ class TestDivision(unittest.TestCase):
 
     def test_divide(self):
         """Ensures we can correctly divide when using a pandas DF."""
-        mock_df = self.expected_df.drop('result', axis=1)
+        mock_df = self.expected_df.drop('low_per_high', axis=1)
 
-        actual = maths.divide(df=mock_df, numerator_col='high', denominator_col='low')
+        actual = maths.divide(df=mock_df, numerator_col='low', denominator_col='high')
 
         assert_frame_equal(actual, self.expected_df, check_dtype=True)
