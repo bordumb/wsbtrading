@@ -106,8 +106,6 @@ pip install pyfolio
 Data sources are TBD
 Currently evaluating the following:
 * [Alpaca](https://github.com/alpacahq/alpaca-trade-api-python)
-* 
-* 
 
 ### Ensemble Strategy
 Our purpose is to create a highly robust trading strategy. So we use an ensemble method to automatically select the best performing agent among PPO, A2C, and DDPG to trade based on the Sharpe ratio. The ensemble process is described as follows:
