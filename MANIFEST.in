@@ -1,0 +1,4 @@
+include README.md
+include reqs3.yml
+include versioneer.py
+include trading/_version.py
