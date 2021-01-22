@@ -10,7 +10,7 @@ The goal is really just to get it up and running, but let's not kid ourselves...
 This project is inspired by [this blog](https://towardsdatascience.com/deep-reinforcement-learning-for-automated-stock-trading-f1dad0126a02),
 however the aim is to advance that work by adding the extending it to the following:
 * Real-time trading (the original methodology made just bi-annual trading adjustments)
-* Productionize to some environment (TBD, but likely using AWS)
+* Productionize to some environment (TBD, but probably AWS)
 * Placing real trades
 
 
@@ -102,8 +102,12 @@ pip install pyfolio
 </div>
 </details>
 
-## Data
+## Data Sources
 Data sources are TBD
+Currently evaluating the following:
+* [Alpaca](https://github.com/alpacahq/alpaca-trade-api-python)
+* 
+* 
 
 ### Ensemble Strategy
 Our purpose is to create a highly robust trading strategy. So we use an ensemble method to automatically select the best performing agent among PPO, A2C, and DDPG to trade based on the Sharpe ratio. The ensemble process is described as follows:
@@ -112,4 +116,4 @@ Our purpose is to create a highly robust trading strategy. So we use an ensemble
 * __Step 3__. After validation, we only use the best model which has the highest Sharpe ratio to predict and trade for the next quarter.
 
 ## Performance
-<img src=figs/performance.png>
+TODO: Add performance reporting
