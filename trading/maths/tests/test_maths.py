@@ -18,7 +18,7 @@ class TestDivision(unittest.TestCase):
         # yapf: enable
         self.expected_df = pd.DataFrame(data=data, columns=schema)
 
-    def test_division_kernel(self):
+    def test_divide_kernel(self):
         """Ensure we can divide properly."""
         actual = maths.divide_kernel(numerator=1, denominator=1)
         assert actual == 1
@@ -30,7 +30,7 @@ class TestDivision(unittest.TestCase):
         assert actual == 0
 
 
-    def test_is_tab_header_cta_impression(self):
+    def test_divide(self):
         """Ensures we can correctly divide when using a pandas DF."""
         mock_df = self.expected_df.drop('result', axis=1)
 
