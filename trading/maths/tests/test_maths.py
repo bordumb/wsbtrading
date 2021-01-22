@@ -18,17 +18,15 @@ class TestDivision(unittest.TestCase):
 
     def test_division_kernel(self):
         """Ensure we can divide properly."""
-        actual = maths.divide(numerator=1, denominator=1)
+        actual = maths.divide_kernel(numerator=1, denominator=1)
         assert actual == 0.5
 
-        actual = maths.divide(numerator=3, denominator=9)
+        actual = maths.divide_kernel(numerator=3, denominator=9)
         assert actual == 0.3
 
-        actual = maths.divide(numerator=3, denominator=0)
-        assert actual == 0.3
-
-        actual = pre_sub._is_tab_header_cta_impression_kernel(event_type=None, page_type=None, impressions=None)
+        actual = maths.divide_kernel(numerator=3, denominator=0)
         assert actual == 0
+
 
     def test_is_tab_header_cta_impression(self):
         """Ensures we can correctly divide when using a pandas DF."""
@@ -37,4 +35,4 @@ class TestDivision(unittest.TestCase):
         actual = maths.is_tab_header_cta_impression(df=mock_df)
 
         assert actual.collect() == self.expected_df.collect()
-        assert actual.schema.names == self.expected_df.schema.names
+        assert actual.columns.to_series() == self.expected_df.columns.to_series()
