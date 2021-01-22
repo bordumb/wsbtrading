@@ -30,9 +30,13 @@ class TestDivision(unittest.TestCase):
 
     def test_is_tab_header_cta_impression(self):
         """Ensures we can correctly divide when using a pandas DF."""
-        mock_df = self.expected_df.drop('result')
+        mock_df = self.expected_df.drop('result', axis=1)
 
-        actual = maths.is_tab_header_cta_impression(df=mock_df)
+        actual = maths.divide(df=mock_df)
 
         assert actual.collect() == self.expected_df.collect()
         assert actual.columns.to_series() == self.expected_df.columns.to_series()
+
+
+if __name__ == '__main__':
+    unittest.main()
