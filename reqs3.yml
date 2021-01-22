@@ -1,0 +1,32 @@
+name: trading3
+channels:
+  - defaults
+dependencies:
+  - pytest
+  - pytest-cov
+  - typing
+  - pandas
+  - python=3.6.9
+  - pyspark=2.4.5
+  - boto3
+  - openjdk=8.0.152
+  - pip:
+      - yapf
+      - tox
+      - sphinx
+      - rinohtype
+      - wheel
+      - pytest-mock
+      - pytype
+      - numpy
+      - pandas
+      - stockstats
+      - scikit-learn
+      - gym
+      - stable-baselines[mpi]
+      - tensorflow==2.4.0
+      - joblib
+      - matplotlib
+      - wheel
+      - pyfolio
+      - versioneer
