@@ -11,7 +11,7 @@ def divide_kernel(numerator: float, denominator: float) -> float:
         denominator: the number for the bottom of your fraction
 
     Returns:
-        a float
+        a float representing one number that was divided by another number
 
     **Example**
 
