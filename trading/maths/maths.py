@@ -1,11 +1,9 @@
 """Functions to aid in quick maths to calculate for ad-hoc analysis and feature engineering."""
 
-from typing import Union, List, Dict, Mapping, Optional, TYPE_CHECKING
-
-from phobos.utils import core
+from trading import check_columns
 
 
-def divide_kernel(numerator: float, denominator: int) -> int:
+def divide_kernel(numerator: float, denominator: float) -> float:
     """Divides one number by another number.
 
     Args:
@@ -20,21 +18,32 @@ def divide_kernel(numerator: float, denominator: int) -> int:
     .. code-block:: python
 
         from trading.maths
-        df_mapped = df.withColumn(
-            'is_tab_header_cta_impression',
-            maths.divide_kernel(
-                col('eventType'), col('pageType'), col('impressions')
-            )
-        )
+        maths.divide_kernel(numerator=3, denominator=9)
     """
-    cta_impression = iFitness.tab_header_cta['impressions']
-    desired_page_types = cta_impression['pageType']
-    desired_event_type = cta_impression['eventType']
-    desired_impression_type = cta_impression['impressions']['impressionType']
+    if denominator == 0:
+        return 0
+    return numerator / denominator
 
-    if impressions is not None and event_type == desired_event_type and page_type in desired_page_types:
-        for impression in impressions:
-            if 'impressionType' in impression and impression['impressionType'] == desired_impression_type:
-                return 1
 
-    return 0
+def divide(df: 'DataFrame', numerator_col: float, denominator_col: float) -> 'DataFrame':
+    """Maps a 0-1 column that indicates which events are an impression for the tab header CTA.
+
+    Args:
+        df: the dataframe to append a column onto
+        numerator_col: the number for the top of your fraction
+        denominator_col: the number for the bottom of your fraction
+
+    Returns:
+        the original dataframe with the division result appended
+
+    **Example**
+
+    .. code-block:: python
+
+        from trading import maths
+        df_mapped = maths.divide(df=df)
+    """
+    check_columns(dataframe=df, required_columns=[numerator_col, denominator_col])
+
+    df['result'] = divide_kernel(numerator=numerator_col, denominator=denominator_col)
+    return df
