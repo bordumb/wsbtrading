@@ -45,5 +45,5 @@ def divide(df: 'DataFrame', numerator_col: str, denominator_col: str) -> 'DataFr
     """
     check_columns(dataframe=df, required_columns=[numerator_col, denominator_col])
 
-    df['result'] = df[numerator_col] / df[denominator_col]
+    df[f'{numerator_col}_perc_{denominator_col}'] = df[numerator_col] / df[denominator_col]
     return df
