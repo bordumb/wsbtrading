@@ -29,7 +29,6 @@ class TestDivision(unittest.TestCase):
         actual = maths.divide_kernel(numerator=3, denominator=0)
         assert actual == 0
 
-
     def test_divide(self):
         """Ensures we can correctly divide when using a pandas DF."""
         mock_df = self.expected_df.drop('low_perc_high', axis=1)
