@@ -9,7 +9,7 @@ import matplotlib.pyplot as plt
 import pickle
 
 # shares normalization factor
-# 100 shares per trade
+# 100 shares per orders
 HMAX_NORMALIZE = 100
 # initial amount of money we have in our account
 INITIAL_ACCOUNT_BALANCE=1000000

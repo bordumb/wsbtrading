@@ -30,3 +30,4 @@ dependencies:
       - wheel
       - pyfolio
       - versioneer
+      - websocket-client
