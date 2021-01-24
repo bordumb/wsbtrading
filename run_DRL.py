@@ -23,13 +23,13 @@ def run_model() -> None:
     print(data.size)
 
     # 2015/10/01 is the date that validation starts
-    # 2016/01/01 is the date that real trading starts
+    # 2016/01/01 is the date that real wsbtrading starts
     # unique_trade_date needs to start from 2015/10/01 for validation purpose
     unique_trade_date = data[(data.datadate > 20151001)&(data.datadate <= 20200707)].datadate.unique()
     print(unique_trade_date)
 
     # rebalance_window is the number of months to retrain the model
-    # validation_window is the number of months to validation the model and select for trading
+    # validation_window is the number of months to validation the model and select for wsbtrading
     rebalance_window = 63
     validation_window = 63
     

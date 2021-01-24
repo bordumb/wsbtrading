@@ -23,7 +23,7 @@ TRANSACTION_FEE_PERCENT = 0.001
 REWARD_SCALING = 1e-4
 
 class StockEnvValidation(gym.Env):
-    """A stock trading environment for OpenAI gym"""
+    """A stock wsbtrading environment for OpenAI gym"""
     metadata = {'render.modes': ['human']}
 
     def __init__(self, df, day = 0, turbulence_threshold=140, iteration=''):
