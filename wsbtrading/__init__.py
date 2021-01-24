@@ -1,6 +1,6 @@
-__version__ = '1.0.0a01'
+__version__ = '1.0.0a04'
 
-__doc__ = """``Trading`` is a module with functions for data I/O, aggregation, modeling, and placing trades online"""
+__doc__ = """wsbtrading is a library that handles data I/O, aggregation, and modeling to facilitate algorithmic trading stategies."""
 
 import logging
 import uuid
