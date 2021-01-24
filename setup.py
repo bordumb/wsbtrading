@@ -3,28 +3,28 @@ import sys
 from setuptools import setup
 import setuptools
 
-import trading
+import wsbtrading
 
 with open('README.md', 'r', encoding='utf-8') as readme:
     DESCRIPTION = readme.read()
 
-version = trading.__version__
+version = wsbtrading.__version__
 
 for arg in sys.argv:
-    if arg.startswith(trading.__version__):
+    if arg.startswith(wsbtrading.__version__):
         staging_version = sys.argv[2]
         version = staging_version
         sys.argv.remove(staging_version)
         break
 
 DISTNAME = 'wsbtrading'
-DESCRIPTION = """trading is a library that handles data I/O, aggregation, 
+DESCRIPTION = """wsbtrading is a library that handles data I/O, aggregation, 
 and modeling to facilitate algorithmic trading stategies."""
 MAINTAINER = 'Brian Deely'
 MAINTAINER_EMAIL = 'brian.s.deely@gmail.com'
 AUTHOR = 'Brian Deely'
 AUTHOR_EMAIL = 'brian.s.deely@gmail.com'
-URL = "https://github.com/bordumb/trading"
+URL = "https://github.com/bordumb/wsbtrading"
 LICENSE = "Apache License, Version 2.0"
 
 classifiers = ['Programming Language :: Python',

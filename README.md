@@ -36,7 +36,7 @@ brew install cmake openmpi
 ### Create and Activate Virtual Environment (Optional but highly recommended)
 cd into this repository
 ```bash
-cd trading
+cd wsbtrading
 ```
 Under folder `/trading`, create a virtual environment
 ```bash
