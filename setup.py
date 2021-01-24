@@ -17,7 +17,7 @@ for arg in sys.argv:
         sys.argv.remove(staging_version)
         break
 
-DISTNAME = 'trading'
+DISTNAME = 'wsbtrading'
 DESCRIPTION = """trading is a library that handles data I/O, aggregation, 
 and modeling to facilitate algorithmic trading stategies."""
 MAINTAINER = 'Brian Deely'
@@ -30,7 +30,6 @@ LICENSE = "Apache License, Version 2.0"
 classifiers = ['Programming Language :: Python',
                'Programming Language :: Python :: 3.6',
                'Intended Audience :: Science/Research',
-               'Intended Audience :: Finance',
                'Topic :: Scientific/Engineering',
                'Topic :: Scientific/Engineering :: Mathematics',
                'Operating System :: OS Independent']

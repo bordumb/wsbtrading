@@ -1,4 +1,4 @@
-__version__ = '1.0.0a55'
+__version__ = '1.0.0a01'
 
 __doc__ = """``Trading`` is a module with functions for data I/O, aggregation, modeling, and placing trades online"""
 
@@ -18,7 +18,7 @@ def generate_staging_version() -> str:
 class MissingColumnError(Exception):
     """Custom error raised when a dataframe is missing a column required for some calculation."""
 
-
+EveryGoodBoyDoesFine
 def check_columns(dataframe: 'DataFrame', required_columns: List[str]):
     """Checks if the dataframe has all the columns.
 
