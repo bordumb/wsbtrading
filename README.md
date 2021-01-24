@@ -1,12 +1,8 @@
-wsbtrading is a library that handles data I/O, aggregation, 
-and modeling to facilitate algorithmic trading stategies. 
-
 # Wall Street Bets Algorithmic Trading
 This is a pet project to try using an ensemble strategy for online, algorithmic trading.
 
-What is an algorithm?
-
-The goal is really just to get it up and running, but let's not kid ourselves...
+``wsbtrading`` is a library that handles data I/O, aggregation, 
+and modeling to facilitate algorithmic trading stategies. 
 
 ### The goal is simple: tendies, tendies, tendies
 
@@ -14,11 +10,7 @@ This project is inspired by [this blog](https://towardsdatascience.com/deep-rein
 however the aim is to advance that work by adding the extending it to the following:
 * Real-time trading (the original methodology made just bi-annual trading adjustments)
 * Productionize to some environment (TBD, but probably AWS)
-* Placing real trades
-
-
-## Abstract
-Procure Tendies.
+* Placing real, automated trades
 
 
 # User Guide
@@ -104,6 +96,7 @@ Installation of system packages on Mac requires [Homebrew](https://brew.sh). Wit
 ```bash
 brew install cmake openmpi
 ```
+If you're on Windows, use at your own risk and please note that we will not be supporting it in any way, shape, or form.
 
 ### Create and Activate Virtual Environment
 cd into this repository
@@ -179,8 +172,27 @@ pip install pyfolio
 
 ## Data Sources
 Data sources are TBD
-Currently evaluating the following:
+### Crypto
+* TBD
+
+### Stocks Trading
 * [Alpaca](https://github.com/alpacahq/alpaca-trade-api-python)
+
+### Options Trading
+* TBD
+
+
+## Trading Platforms
+Trading platforms are TBD
+### Crypto
+* [Shrimpy](https://blog.shrimpy.io/blog/binance-crypto-trading-bots-with-python)
+* [Binance](https://github.com/binance/binance-spot-api-docs)
+
+### Stocks Trading
+* [Alpaca](https://github.com/alpacahq/alpaca-trade-api-python)
+
+### Options Trading
+* [Lightspeed Trading](https://www.lightspeed.com/trading-api/)
 
 ### Ensemble Strategy
 Our purpose is to create a highly robust trading strategy. So we use an ensemble method to automatically select the best performing agent among PPO, A2C, and DDPG to trade based on the Sharpe ratio. The ensemble process is described as follows:
