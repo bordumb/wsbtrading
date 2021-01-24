@@ -39,11 +39,11 @@ def write_snapshot(start_dt: str, end_dt: str, file_name: Optional[str] = 'stock
 
     .. code-block:: python
 
-        from trading.data_io import snapshot_daily
+        from wsbtrading.data_io import snapshot_daily
         snapshot_daily.write_snapshot(start_dt='2021-01-01', end_dt='2021-01-01')
         snapshot_daily.write_snapshot(start_dt='2017-01-01', end_dt='2017-04-30', stock_tickers=['AAPL', 'GME'])
     """
-    os.chdir('trading/data/')
+    os.chdir('wsbtrading/data/')
     # TODO: swap out yfinance for something else
     if stock_tickers is None:
         df = pandas.read_csv(file_name)
@@ -72,12 +72,12 @@ def read_snapshot(stock_tickers: Optional[List[str]] = None) -> 'Dataframe':
 
     .. code-block:: python
 
-    from trading.data_io import snapshot_daily
+    from wsbtrading.data_io import snapshot_daily
     snapshot_daily.read_snapshot()
     dict_of_df = snapshot_daily.read_snapshot(stock_tickers=['AAPL'])
     """
     dataframes = {}
-    base_path = 'trading/data/prices/snapshot/daily/'
+    base_path = 'wsbtrading/data/prices/snapshot/daily/'
     files = [file_name for file_name in os.listdir(base_path)]
     if stock_tickers is not None:
         # Pull only the files that the user specifies
@@ -102,7 +102,7 @@ def read_snapshot(stock_tickers: Optional[List[str]] = None) -> 'Dataframe':
 #
 # stock_tickers = ['AAPL']
 # dataframes = {}
-# base_path = 'trading/data/prices/snapshot/daily/'
+# base_path = 'wsbtrading/data/prices/snapshot/daily/'
 #
 # if stock_tickers is not None:
 #     # Pull only the files that the user specifies

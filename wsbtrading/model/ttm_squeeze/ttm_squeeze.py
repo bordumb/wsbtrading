@@ -1,5 +1,5 @@
-from trading.data_io import snapshot_daily
-from trading.maths import is_in_squeeze
+from wsbtrading.data_io import snapshot_daily
+from wsbtrading.maths import is_in_squeeze
 
 dict_of_df = snapshot_daily.read_snapshot()
 
