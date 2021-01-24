@@ -1,6 +1,4 @@
-<p align="center">
-  <img src="https://github.com/bordumb/wsbtrading/blob/basicModeling/images/WallStreetBets.png" />
-</p>
+![alt text](https://github.com/bordumb/wsbtrading/blob/basicModeling/images/WallStreetBets.png)
 
 # Wall Street Bets Algorithmic Trading
 This is a pet project to try using an ensemble strategy for online, algorithmic trading.
