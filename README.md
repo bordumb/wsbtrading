@@ -21,6 +21,18 @@ This project is registered on [PyPi](https://pypi.org/project/wsbtrading/), so j
 pip install wsbtrading
 ```
 
+If you have both python 2.7 and 3.x, you may get an error like below:
+```bash 
+DEPRECATION: Python 2.7 reached the end of its life on January 1st, 2020. Please upgrade your Python as Python 2.7 is no longer maintained. pip 21.0 will drop support for Python 2.7 in January 2021. More details about Python 2 support in pip can be found at https://pip.pypa.io/en/latest/development/release-process/#python-2-support pip 21.0 will remove support for this functionality.
+Defaulting to user installation because normal site-packages is not writeable
+ERROR: Could not find a version that satisfies the requirement wsbtrading (from versions: none)
+ERROR: No matching distribution found for wsbtrading
+```
+If you get this, just explicitly install under python 3.x as follows:
+```bash
+python3 -m pip install --user wsbtrading
+```
+
 ## Basic Usage
 Let's say we have a time series like below:
 ```
