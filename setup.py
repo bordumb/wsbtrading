@@ -52,7 +52,9 @@ classifiers = ['Programming Language :: Python',
                'Intended Audience :: Science/Research',
                'Topic :: Scientific/Engineering',
                'Topic :: Scientific/Engineering :: Mathematics',
-               'Operating System :: OS Independent']
+               'Operating System :: OS Independent',
+               'Intended Audience :: Financial and Insurance Industry',
+               'Intended Audience :: Information Technology']
 
 if __name__ == "__main__":
     setup(
