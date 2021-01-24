@@ -8,7 +8,7 @@ and modeling to facilitate algorithmic trading stategies.
 
 ### The goal is simple: tendies, tendies, tendies
 
-This project is inspired by [this blog](https://towardsdatascience.com/deep-reinforcement-learning-for-automated-stock-trading-f1dad0126a02),
+This project is inspired by [this project](https://github.com/bordumb/Deep-Reinforcement-Learning-for-Automated-Stock-Trading-Ensemble-Strategy-ICAIF-2020),
 however the aim is to advance that work by adding the extending it to the following:
 * Real-time trading (the original methodology made just bi-annual trading adjustments)
 * Productionize to some environment (TBD, but probably AWS)
