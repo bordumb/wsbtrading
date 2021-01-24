@@ -1,11 +1,14 @@
 wsbtrading is a library that handles data I/O, aggregation, 
 and modeling to facilitate algorithmic trading stategies. 
 
-# Reinforcement Learning and Automated Stock Trading
+# Wall Street Bets Algorithmic Trading
 This is a pet project to try using an ensemble strategy for online, algorithmic trading.
 
+What is an algorithm?
+
 The goal is really just to get it up and running, but let's not kid ourselves...
-> We want some tendies.
+
+### The goal is simple: tendies, tendies, tendies
 
 This project is inspired by [this blog](https://towardsdatascience.com/deep-reinforcement-learning-for-automated-stock-trading-f1dad0126a02),
 however the aim is to advance that work by adding the extending it to the following:
@@ -45,6 +48,14 @@ CLOSE = 'Close'
 LOW = 'Low'
 HIGH = 'High'
 
+lower_band_df = maths.lower_band(df=df, 
+                                 metric_col=CLOSE, 
+                                 rolling_window=ROLLING_WINDOW)
+
+upper_band_df = maths.upper_band(df=df, 
+                                 metric_col=CLOSE, 
+                                 rolling_window=ROLLING_WINDOW)
+
 lower_keltner_df = maths.lower_keltner(df=df, 
                                        metric_col=CLOSE, 
                                        low_col=LOW, 
@@ -57,15 +68,36 @@ upper_keltner_df = maths.upper_keltner(df=df,
                                        high_col=HIGH,
                                        rolling_window=ROLLING_WINDOW)
 ```
+After this, we end up with a much richer dataset:
+```
+         Date  High  Low  Close  2sma   2stddev  lower_band  upper_band  true_range   ATR  lower_keltner  upper_keltner
+0  2017-01-03    22   20     20   NaN       NaN         NaN         NaN           2   NaN            NaN            NaN
+1  2017-01-04    32   20     31  25.5  7.778175    9.943651   41.056349          12   7.0          15.00          36.00
+2  2017-01-05    42   32     40  35.5  6.363961   22.772078   48.227922          10  11.0          19.00          52.00
+3  2017-01-06    52   45     51  45.5  7.778175   29.943651   61.056349           7   8.5          32.75          58.25
+```
+Just for edification, this quick example constitutes the building blocks of a technical strategy, known as a ttm squeeze. 
+[Here is a good article](https://tickertape.tdameritrade.com/tools/fearless-technician-ttm-squeeze-indicator-15072) on the topic, albeit from a pretty boomer website.
 
+Please note, the majority of analytical functionality overlaps with the technical analysis ``ta-lib``
+So rather than recreate the wheel, it may be good to [read up on the library here](https://ta-lib.org/) as it will be
+used quite a bit.
+
+Going forward, the main focus on the ``maths`` module will be to add AI-related functionality and various strategies 
+for automated trading. The goal is really to take the emotion out of making tendies.
 
 
 
 # Developer Guide
-## Installation:
+## Installation
 ```shell
-git clone https://github.com/bordumb/trading.git
+git clone https://github.com/bordumb/wsbtrading.git
 ```
+
+## Development Rules
+* Always create a new branch for any new changes
+* Write code that adheres to [pep8](https://www.python.org/dev/peps/pep-0008/)
+* Write tests for every function
 
 #### Mac OS X
 Installation of system packages on Mac requires [Homebrew](https://brew.sh). With Homebrew installed, run the following:
@@ -78,7 +110,7 @@ cd into this repository
 ```bash
 cd wsbtrading
 ```
-Under folder `/trading`, create a virtual environment
+From that root directory `/wsbtrading`, create a virtual environment
 ```bash
 conda env update -n trading3 -f reqs3.yml
 ```
