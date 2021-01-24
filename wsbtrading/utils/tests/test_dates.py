@@ -3,7 +3,7 @@ from datetime import datetime
 import pandas as pd
 from pandas._testing import assert_frame_equal
 
-from wsbtrading.wsbtrading.utils import dates
+from wsbtrading.utils import dates
 
 
 class TestConvertUnixTimestampToDate(unittest.TestCase):

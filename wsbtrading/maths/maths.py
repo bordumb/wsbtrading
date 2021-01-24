@@ -1,7 +1,7 @@
 """Functions to aid in quick maths to calculate for ad-hoc analysis and feature engineering."""
 from typing import Optional, List
 
-# from wsbtrading import check_columns
+from wsbtrading import check_columns
 
 
 def divide_kernel(numerator: float, denominator: float) -> float:
@@ -73,6 +73,32 @@ def sma(df: 'Dataframe', metric_col: str, rolling_window: Optional[int] = 20) ->
     rolling_window_string = str(rolling_window)
 
     df[f'{rolling_window_string}sma'] = df[metric_col].rolling(window=rolling_window).mean()
+    return df
+
+
+def ema(df: 'Dataframe', metric_col: str, rolling_window: Optional[int] = 20) -> 'DataFrame':
+    """Calculates the exponential moving average (EMA) over a given time window.
+    For more on ema versus sma, please [see this article](https://www.investopedia.com/ask/answers/122314/what-exponential-moving-average-ema-formula-and-how-ema-calculated.asp)
+
+    Args:
+        df: the dataframe to append a column onto
+        metric_col: the column to calculate over (usually the 'Close' price)
+        rolling_window: the time window to calculate over
+
+    Returns:
+        the original dataframe with the exponential moving average appended
+
+    **Example**
+
+    .. code-block:: python
+
+        from wsbtrading import maths
+        df_mapped = maths.ema(df=df, metric_col='Close', rolling_window=20)
+    """
+    df = df.copy()
+    rolling_window_string = str(rolling_window)
+
+    df[f'{rolling_window_string}ema'] = df[metric_col].rolling(window=rolling_window).mean()
     return df
 
 
@@ -228,7 +254,6 @@ def lower_keltner(df: 'Dataframe', metric_col: str, low_col: str, high_col: str,
     rolling_window_string = str(rolling_window)
 
     df = sma(df=df, metric_col=metric_col, rolling_window=rolling_window)
-    # df = rolling_stddev(df=df, metric_col=metric_col, rolling_window=rolling_window)
     df = avg_true_range(df=df, low_col=low_col, high_col=high_col, rolling_window=rolling_window)
 
     df['lower_keltner'] = df[f'{rolling_window_string}sma'] - (df['ATR'] * 1.5)
@@ -259,7 +284,6 @@ def upper_keltner(df: 'Dataframe', metric_col: str, low_col: str, high_col: str,
     rolling_window_string = str(rolling_window)
 
     df = sma(df=df, metric_col=metric_col, rolling_window=rolling_window)
-    # df = rolling_stddev(df=df, metric_col=metric_col, rolling_window=rolling_window)
     df = avg_true_range(df=df, low_col=low_col, high_col=high_col, rolling_window=rolling_window)
 
     df['upper_keltner'] = df[f'{rolling_window_string}sma'] + (df['ATR'] * 1.5)

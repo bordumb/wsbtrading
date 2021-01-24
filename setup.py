@@ -1,7 +1,9 @@
 #!/usr/bin/env python
+import pathlib
+import subprocess
 import sys
-from setuptools import setup
-import setuptools
+
+from setuptools import setup, find_packages
 
 import wsbtrading
 
@@ -15,6 +17,24 @@ for arg in sys.argv:
         staging_version = sys.argv[2]
         version = staging_version
         sys.argv.remove(staging_version)
+        break
+
+def _get_sha() -> str:
+    """Takes the sha from the HEAD commit."""
+    project_root = pathlib.Path(__file__).parent
+    try:
+        return subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=project_root).decode('ascii').strip()
+
+    except subprocess.CalledProcessError:  # most likely runs from tox
+        pass
+
+for arg in sys.argv:
+    if arg == 'dev-build':
+        sha = _get_sha()
+        if sha is not None:
+            _hash = _get_sha()[:7]
+            version += '+' + _hash
+        sys.argv.remove(arg)
         break
 
 DISTNAME = 'wsbtrading'
@@ -43,7 +63,7 @@ if __name__ == "__main__":
         description=DESCRIPTION,
         license=LICENSE,
         url=URL,
-        packages=setuptools.find_packages(),
+        packages=find_packages(),
         classifiers=classifiers,
         test_suite='nose.collector',
     )

@@ -31,3 +31,4 @@ dependencies:
       - pyfolio
       - versioneer
       - websocket-client
+      - ta-lib

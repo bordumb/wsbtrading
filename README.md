@@ -1,4 +1,4 @@
-trading is a library that handles data I/O, aggregation, 
+wsbtrading is a library that handles data I/O, aggregation, 
 and modeling to facilitate algorithmic trading stategies. 
 
 # Reinforcement Learning and Automated Stock Trading
@@ -17,14 +17,55 @@ however the aim is to advance that work by adding the extending it to the follow
 ## Abstract
 Procure Tendies.
 
+
+# User Guide
+
+## Installation
+This project is registered on [PyPi](https://pypi.org/project/wsbtrading/), so just install it like anything else you would:
+```bash
+pip install wsbtrading
+```
+
+## Basic Usage
+Let's say we have a time series like below:
+```
+Date        High  Low  Close
+2017-01-03    22   20     20
+2017-01-04    32   20     31
+2017-01-05    42   32     40
+2017-01-06    52   45     51
+```
+We can quickly apply various financial analysis. 
+In the example below, we calculate the [lower and upper keltner channels](https://www.investopedia.com/terms/k/keltnerchannel.asp).
+```python
+from wsbtrading import maths
+
+ROLLING_WINDOW = 2
+CLOSE = 'Close'
+LOW = 'Low'
+HIGH = 'High'
+
+lower_keltner_df = maths.lower_keltner(df=df, 
+                                       metric_col=CLOSE, 
+                                       low_col=LOW, 
+                                       high_col=HIGH,
+                                       rolling_window=ROLLING_WINDOW)
+
+upper_keltner_df = maths.upper_keltner(df=df, 
+                                       metric_col=CLOSE, 
+                                       low_col=LOW, 
+                                       high_col=HIGH,
+                                       rolling_window=ROLLING_WINDOW)
+```
+
+
+
+
+# Developer Guide
 ## Installation:
 ```shell
 git clone https://github.com/bordumb/trading.git
 ```
-
-### Prerequisites
-TODO: Fill Out
-
 
 #### Mac OS X
 Installation of system packages on Mac requires [Homebrew](https://brew.sh). With Homebrew installed, run the following:
@@ -32,8 +73,7 @@ Installation of system packages on Mac requires [Homebrew](https://brew.sh). Wit
 brew install cmake openmpi
 ```
 
-
-### Create and Activate Virtual Environment (Optional but highly recommended)
+### Create and Activate Virtual Environment
 cd into this repository
 ```bash
 cd wsbtrading
@@ -44,18 +84,21 @@ conda env update -n trading3 -f reqs3.yml
 ```
 To activate our virtual env:
 ```
-conda activate phobos3
+conda activate trading3
 ```
 
 ## Dependencies
 
-The script has been tested running under **Python >= 3.6.0**, with the folowing packages installed:
+The script has been tested running under **Python >= 3.6.0**
+
+Use the command below to ensure your virtual environment has all the correct packages installed
 
 ```shell
 pip install -r reqs3.yml
 ```
 
-### Open Questions
+
+# Open Questions
 The following are a list of topics that are not fully baked out and largely pertain to tooling choices.
 
 ### About Tensorflow 2.0
