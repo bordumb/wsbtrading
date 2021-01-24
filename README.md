@@ -111,6 +111,7 @@ Installation of system packages on Mac requires [Homebrew](https://brew.sh). Wit
 brew install cmake openmpi
 ```
 If you're on Windows, use at your own risk and please note that we will not be supporting it in any way, shape, or form.
+In fact if you're on Windows, it's a miracle you even found this page...
 
 ### Create and Activate Virtual Environment
 cd into this repository
@@ -125,17 +126,6 @@ To activate our virtual env:
 ```
 conda activate trading3
 ```
-
-## Dependencies
-
-The script has been tested running under **Python >= 3.6.0**
-
-Use the command below to ensure your virtual environment has all the correct packages installed
-
-```shell
-pip install -r reqs3.yml
-```
-
 
 # Open Questions
 The following are a list of topics that are not fully baked out and largely pertain to tooling choices.
