@@ -69,7 +69,9 @@ After this, we end up with a much richer dataset:
 3  2017-01-06    52   45     51  45.5  7.778175   29.943651   61.056349           7   8.5          32.75          58.25
 ```
 Just for edification, this quick example constitutes the building blocks of a technical strategy, known as a ttm squeeze. 
-[Here is a good article](https://tickertape.tdameritrade.com/tools/fearless-technician-ttm-squeeze-indicator-15072) on the topic, albeit from a pretty boomer website.
+[Here is a good article](https://tickertape.tdameritrade.com/tools/fearless-technician-ttm-squeeze-indicator-15072) on the topic, albeit from a pretty antiquated company.
+
+You can see a simple implementation of this strategy in [wsbtrading/model/ttm_squeeze here](https://github.com/bordumb/wsbtrading/blob/main/wsbtrading/model/ttm_squeeze/ttm_squeeze.py).
 
 Please note, the majority of analytical functionality overlaps with the technical analysis ``ta-lib``
 So rather than recreate the wheel, it may be good to [read up on the library here](https://ta-lib.org/) as it will be
