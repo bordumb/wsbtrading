@@ -3,7 +3,7 @@ import math
 import pandas as pd
 from pandas._testing import assert_frame_equal
 
-from trading import maths
+from wsbtrading import maths
 
 
 class TestDivision(unittest.TestCase):
@@ -236,46 +236,47 @@ class TestIsInSqueeze(unittest.TestCase):
 
         actual = maths.is_in_squeeze(df=mock_df, metric_col='Close', low_col='Low', high_col='High', rolling_window=2)
 
-        assert actual is False
+        self.assertFalse(actual)
 
-#
-#
-# import math
-# import pandas as pd
-# from pandas._testing import assert_frame_equal
-#
-# from trading import maths
-#
-# schema = ['Date', 'High', 'Low', 'Close', 'lower_keltner']
-# data = [
-#             ('2017-01-03', 22, 20, 20, None),
-#             ('2017-01-04', 32, 20, 31, 15.00),
-#             ('2017-01-05', 42, 32, 40, 19.00),
-#             ('2017-01-06', 52, 45, 51, 32.75),
-#         ]
-# # yapf: enable
-# expected_df = pd.DataFrame(data=data, columns=schema)
-#
-# mock_df = expected_df[['Date', 'High', 'Low', 'Close']]
-#
-# metric_col='Close'
-# low_col='Low'
-# high_col='High'
-# rolling_window=2
-# lower_band_df = maths.lower_band(df=df, metric_col=metric_col, rolling_window=rolling_window)
-# upper_band_df = maths.upper_band(df=lower_band_df, metric_col=metric_col, rolling_window=rolling_window)
-# lower_keltner_df = maths.lower_keltner(df=upper_band_df, metric_col=metric_col, low_col=low_col, high_col=high_col,
-#                                  rolling_window=rolling_window)
-# upper_keltner_df = maths.upper_keltner(df=lower_keltner_df, metric_col=metric_col, low_col=low_col, high_col=high_col,
-#                                  rolling_window=rolling_window)
-#
-# def is_squeeze(df):
-#     return df['lower_band'].iloc[-3] > df['lower_keltner'].iloc[-3] and df['upper_band'].iloc[-3] < df['upper_keltner'].iloc[-3]
-#
-# is_squeeze(df=upper_keltner_df)
-#
-# actual = maths.is_in_squeeze(df=mock_df, metric_col='Close', low_col='Low', high_col='High', rolling_window=2)
-# actual
-#
-#
-#
+
+
+import math
+import pandas as pd
+from pandas._testing import assert_frame_equal
+
+from wsbtrading import maths
+
+schema = ['Date', 'High', 'Low', 'Close', 'lower_keltner']
+data = [
+            ('2017-01-03', 22, 20, 20, None),
+            ('2017-01-04', 32, 20, 31, 15.00),
+            ('2017-01-05', 42, 32, 40, 19.00),
+            ('2017-01-06', 52, 45, 51, 32.75),
+        ]
+# yapf: enable
+expected_df = pd.DataFrame(data=data, columns=schema)
+
+mock_df = expected_df[['Date', 'High', 'Low', 'Close']]
+
+metric_col='Close'
+low_col='Low'
+high_col='High'
+rolling_window=2
+lower_band_df = maths.lower_band(df=mock_df, metric_col=metric_col, rolling_window=rolling_window)
+upper_band_df = maths.upper_band(df=lower_band_df, metric_col=metric_col, rolling_window=rolling_window)
+lower_keltner_df = maths.lower_keltner(df=upper_band_df, metric_col=metric_col, low_col=low_col, high_col=high_col,
+                                 rolling_window=rolling_window)
+upper_keltner_df = maths.upper_keltner(df=lower_keltner_df, metric_col=metric_col, low_col=low_col, high_col=high_col,
+                                 rolling_window=rolling_window)
+
+def is_squeeze(df):
+    return df['lower_band'].iloc[-3] > df['lower_keltner'].iloc[-3] and df['upper_band'].iloc[-3] < df['upper_keltner'].iloc[-3]
+
+is_squeeze(df=upper_keltner_df)
+
+actual = maths.is_in_squeeze(df=mock_df, metric_col='Close', low_col='Low', high_col='High', rolling_window=2)
+actual
+
+assert actual == False
+
+

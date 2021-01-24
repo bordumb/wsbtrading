@@ -1,36 +1,55 @@
 #!/usr/bin/env python
+import pathlib
+import subprocess
 import sys
-from setuptools import setup
-import setuptools
 
-import trading
+from setuptools import setup, find_packages
+
+import wsbtrading
 
 with open('README.md', 'r', encoding='utf-8') as readme:
     DESCRIPTION = readme.read()
 
-version = trading.__version__
+version = wsbtrading.__version__
 
 for arg in sys.argv:
-    if arg.startswith(trading.__version__):
+    if arg.startswith(wsbtrading.__version__):
         staging_version = sys.argv[2]
         version = staging_version
         sys.argv.remove(staging_version)
         break
 
-DISTNAME = 'trading'
-DESCRIPTION = """trading is a library that handles data I/O, aggregation, 
+def _get_sha() -> str:
+    """Takes the sha from the HEAD commit."""
+    project_root = pathlib.Path(__file__).parent
+    try:
+        return subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=project_root).decode('ascii').strip()
+
+    except subprocess.CalledProcessError:  # most likely runs from tox
+        pass
+
+for arg in sys.argv:
+    if arg == 'dev-build':
+        sha = _get_sha()
+        if sha is not None:
+            _hash = _get_sha()[:7]
+            version += '+' + _hash
+        sys.argv.remove(arg)
+        break
+
+DISTNAME = 'wsbtrading'
+DESCRIPTION = """wsbtrading is a library that handles data I/O, aggregation, 
 and modeling to facilitate algorithmic trading stategies."""
 MAINTAINER = 'Brian Deely'
 MAINTAINER_EMAIL = 'brian.s.deely@gmail.com'
 AUTHOR = 'Brian Deely'
 AUTHOR_EMAIL = 'brian.s.deely@gmail.com'
-URL = "https://github.com/bordumb/trading"
+URL = "https://github.com/bordumb/wsbtrading"
 LICENSE = "Apache License, Version 2.0"
 
 classifiers = ['Programming Language :: Python',
                'Programming Language :: Python :: 3.6',
                'Intended Audience :: Science/Research',
-               'Intended Audience :: Finance',
                'Topic :: Scientific/Engineering',
                'Topic :: Scientific/Engineering :: Mathematics',
                'Operating System :: OS Independent']
@@ -44,7 +63,7 @@ if __name__ == "__main__":
         description=DESCRIPTION,
         license=LICENSE,
         url=URL,
-        packages=setuptools.find_packages(),
+        packages=find_packages(),
         classifiers=classifiers,
         test_suite='nose.collector',
     )

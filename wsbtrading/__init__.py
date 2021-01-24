@@ -18,7 +18,7 @@ def generate_staging_version() -> str:
 class MissingColumnError(Exception):
     """Custom error raised when a dataframe is missing a column required for some calculation."""
 
-EveryGoodBoyDoesFine
+
 def check_columns(dataframe: 'DataFrame', required_columns: List[str]):
     """Checks if the dataframe has all the columns.
 
