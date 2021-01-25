@@ -56,7 +56,7 @@ def write_snapshot(start_dt: str, end_dt: str, file_name: Optional[str] = 'stock
             data.to_csv(f'prices/snapshot/daily/{ticker}.csv')
 
 
-def read_snapshot(stock_tickers: Optional[List[str]] = None) -> 'Dataframe':
+def read_snapshot(stock_tickers: Optional[List[str]] = None) -> pd.DataFrame:
     """Reads all, some, or one specific stock's financial snapshot dataset.
 
     Args:

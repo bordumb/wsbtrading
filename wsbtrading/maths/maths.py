@@ -1,5 +1,6 @@
 """Functions to aid in quick maths to calculate for ad-hoc analysis and feature engineering."""
-from typing import Optional, List
+from typing import Optional
+import pandas as pd
 
 from wsbtrading import check_columns
 
@@ -26,7 +27,7 @@ def divide_kernel(numerator: float, denominator: float) -> float:
     return numerator / denominator
 
 
-def divide(df: 'DataFrame', numerator_col: str, denominator_col: str) -> 'DataFrame':
+def divide(df: 'DataFrame', numerator_col: str, denominator_col: str) -> pd.DataFrame:
     """Divides one number by another.
 
     Args:
@@ -51,7 +52,7 @@ def divide(df: 'DataFrame', numerator_col: str, denominator_col: str) -> 'DataFr
     return df
 
 
-def sma(df: 'Dataframe', metric_col: str, rolling_window: Optional[int] = 20) -> 'DataFrame':
+def sma(df: 'Dataframe', metric_col: str, rolling_window: Optional[int] = 20) -> pd.DataFrame:
     """Calculates the simple moving average (SMA) over a given time window.
 
     Args:
@@ -76,7 +77,7 @@ def sma(df: 'Dataframe', metric_col: str, rolling_window: Optional[int] = 20) ->
     return df
 
 
-def ema(df: 'Dataframe', metric_col: str, rolling_window: Optional[int] = 20) -> 'DataFrame':
+def ema(df: 'Dataframe', metric_col: str, rolling_window: Optional[int] = 20) -> pd.DataFrame:
     """Calculates the exponential moving average (EMA) over a given time window.
     For more on ema versus sma, please [see this article](https://www.investopedia.com/ask/answers/122314/what-exponential-moving-average-ema-formula-and-how-ema-calculated.asp)
 
@@ -102,7 +103,7 @@ def ema(df: 'Dataframe', metric_col: str, rolling_window: Optional[int] = 20) ->
     return df
 
 
-def rolling_stddev(df: 'Dataframe', metric_col: str, rolling_window: Optional[int] = 20) -> 'DataFrame':
+def rolling_stddev(df: 'Dataframe', metric_col: str, rolling_window: Optional[int] = 20) -> pd.DataFrame:
     """Calculates the moving standard deviation over a given time window.
 
     Args:
@@ -127,7 +128,7 @@ def rolling_stddev(df: 'Dataframe', metric_col: str, rolling_window: Optional[in
     return df
 
 
-def lower_band(df: 'Dataframe', metric_col: str, rolling_window: Optional[int] = 20) -> 'DataFrame':
+def lower_band(df: 'Dataframe', metric_col: str, rolling_window: Optional[int] = 20) -> pd.DataFrame:
     """Calculates the lower bound of a stock's price movements.
 
     Args:
@@ -154,7 +155,7 @@ def lower_band(df: 'Dataframe', metric_col: str, rolling_window: Optional[int] =
     return df
 
 
-def upper_band(df: 'Dataframe', metric_col: str, rolling_window: Optional[int] = 20) -> 'DataFrame':
+def upper_band(df: 'Dataframe', metric_col: str, rolling_window: Optional[int] = 20) -> pd.DataFrame:
     """Calculates the lower bound of a stock's price movements.
 
     Args:
@@ -181,7 +182,7 @@ def upper_band(df: 'Dataframe', metric_col: str, rolling_window: Optional[int] =
     return df
 
 
-def true_range(df: 'Dataframe', low_col: str, high_col: str) -> 'DataFrame':
+def true_range(df: 'Dataframe', low_col: str, high_col: str) -> pd.DataFrame:
     """Calculates the true range (TR) for a stocks price movement.
 
     Args:
@@ -204,7 +205,7 @@ def true_range(df: 'Dataframe', low_col: str, high_col: str) -> 'DataFrame':
     return df
 
 
-def avg_true_range(df: 'Dataframe', low_col: str, high_col: str, rolling_window: Optional[int] = 20) -> 'DataFrame':
+def avg_true_range(df: 'Dataframe', low_col: str, high_col: str, rolling_window: Optional[int] = 20) -> pd.DataFrame:
     """Calculates the true range (TR) for a stocks price movement over a given time window.
 
     Args:
@@ -231,7 +232,7 @@ def avg_true_range(df: 'Dataframe', low_col: str, high_col: str, rolling_window:
 
 
 def lower_keltner(df: 'Dataframe', metric_col: str, low_col: str, high_col: str, rolling_window: Optional[int] = 20) \
-        -> 'DataFrame':
+        -> pd.DataFrame:
     """Calculates the lower Keltner of a stock's price movements.
 
     Args:
@@ -261,7 +262,7 @@ def lower_keltner(df: 'Dataframe', metric_col: str, low_col: str, high_col: str,
 
 
 def upper_keltner(df: 'Dataframe', metric_col: str, low_col: str, high_col: str, rolling_window: Optional[int] = 20) \
-        -> 'DataFrame':
+        -> pd.DataFrame:
     """Calculates the upper Keltner of a stock's price movements.
 
     Args:
