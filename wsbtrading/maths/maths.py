@@ -1,6 +1,7 @@
 """Functions to aid in quick maths to calculate for ad-hoc analysis and feature engineering."""
 from typing import Optional
 import pandas as pd
+import numpy as np
 
 from wsbtrading import check_columns
 
@@ -330,3 +331,58 @@ def is_in_squeeze(df: 'Dataframe', metric_col: str, low_col: str, high_col: str,
            > upper_keltner_df['lower_keltner'].iloc[look_back_period] \
            and upper_keltner_df['upper_band'].iloc[look_back_period] \
            < upper_keltner_df['upper_keltner'].iloc[look_back_period]
+
+
+def calculate_turbulence(df: 'Dataframe', date_col: str, adjusted_close: str, stock_ticker_col: Optional[str] = None) -> pd.DataFrame:
+    """Calculates the .
+
+    Note:
+
+    Args:
+        df: the dataframe to append a column onto
+        date_col: the column to calculate over (usually the 'Close' price)
+        adjusted_close: the column with the low price
+
+    Returns:
+        the original dataframe with the lower bound appended
+
+    **Example**
+
+    .. code-block:: python
+
+        from wsbtrading import maths
+        df_mapped = maths.is_in_squeeze(
+            df=df,
+            metric_col='Close',
+            low_col='Low',
+            high_col='High',
+            rolling_window=20
+        )
+    """
+    df_price_pivot = df.pivot(index=date_col, columns=stock_ticker_col, values=adjusted_close)
+    unique_date = df[date_col].unique()
+    # start after a year
+    start = 252
+    turbulence_index = [0] * start
+    # turbulence_index = [0]
+    count = 0
+    for i in range(start, len(unique_date)):
+        current_price = df_price_pivot[df_price_pivot.index == unique_date[i]]
+        hist_price = df_price_pivot[[n in unique_date[0:i] for n in df_price_pivot.index]]
+        cov_temp = hist_price.cov()
+        current_temp = (current_price - np.mean(hist_price, axis=0))
+        temp = current_temp.values.dot(np.linalg.inv(cov_temp)).dot(current_temp.values.T)
+        if temp > 0:
+            count += 1
+            if count > 2:
+                turbulence_temp = temp[0][0]
+            else:
+                # avoid large outlier because of the calculation just begins
+                turbulence_temp = 0
+        else:
+            turbulence_temp = 0
+        turbulence_index.append(turbulence_temp)
+
+    turbulence_index = pd.DataFrame({'date_col': date_col.index,
+                                     'turbulence': turbulence_index})
+    return turbulence_index

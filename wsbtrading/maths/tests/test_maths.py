@@ -239,44 +239,69 @@ class TestIsInSqueeze(unittest.TestCase):
         self.assertFalse(actual)
 
 
-
-import math
-import pandas as pd
-from pandas._testing import assert_frame_equal
-
-from wsbtrading import maths
-
-schema = ['Date', 'High', 'Low', 'Close', 'lower_keltner']
-data = [
+class TestCalculateTurbulence(unittest.TestCase):
+    def setUp(self) -> None:
+        # yapf: disable
+        schema = ['Date', 'High', 'Low', 'Close', 'turbulence']
+        data = [
             ('2017-01-03', 22, 20, 20, None),
-            ('2017-01-04', 32, 20, 31, 15.00),
-            ('2017-01-05', 42, 32, 40, 19.00),
-            ('2017-01-06', 52, 45, 51, 32.75),
+            ('2017-01-04', 32, 20, 31, 36.00),
+            ('2017-01-05', 42, 32, 40, 52.00),
+            ('2017-01-06', 52, 45, 51, 58.25),
         ]
-# yapf: enable
-expected_df = pd.DataFrame(data=data, columns=schema)
+        # yapf: enable
+        self.expected_df = pd.DataFrame(data=data, columns=schema)
 
-mock_df = expected_df[['Date', 'High', 'Low', 'Close']]
+    def test_calculate_turbulence(self):
+        """Ensures we correctly calculate when a stock is squeezing."""
+        mock_df = self.expected_df[['Date', 'High', 'Low', 'Close']]
 
-metric_col='Close'
-low_col='Low'
-high_col='High'
-rolling_window=2
-lower_band_df = maths.lower_band(df=mock_df, metric_col=metric_col, rolling_window=rolling_window)
-upper_band_df = maths.upper_band(df=lower_band_df, metric_col=metric_col, rolling_window=rolling_window)
-lower_keltner_df = maths.lower_keltner(df=upper_band_df, metric_col=metric_col, low_col=low_col, high_col=high_col,
-                                 rolling_window=rolling_window)
-upper_keltner_df = maths.upper_keltner(df=lower_keltner_df, metric_col=metric_col, low_col=low_col, high_col=high_col,
-                                 rolling_window=rolling_window)
+        actual = maths.calculate_turbulence(df=mock_df,
+                                            date_col='Date',
+                                            adjusted_close='Close',
+                                            stock_ticker_col='Low')
 
-def is_squeeze(df):
-    return df['lower_band'].iloc[-3] > df['lower_keltner'].iloc[-3] and df['upper_band'].iloc[-3] < df['upper_keltner'].iloc[-3]
+        self.assertFalse(actual)
 
-is_squeeze(df=upper_keltner_df)
 
-actual = maths.is_in_squeeze(df=mock_df, metric_col='Close', low_col='Low', high_col='High', rolling_window=2)
-actual
-
-assert actual == False
-
+#
+# import math
+# import pandas as pd
+# from pandas._testing import assert_frame_equal
+#
+# from wsbtrading import maths
+#
+# schema = ['Date', 'High', 'Low', 'Close', 'lower_keltner']
+# data = [
+#             ('2017-01-03', 22, 20, 20, None),
+#             ('2017-01-04', 32, 20, 31, 15.00),
+#             ('2017-01-05', 42, 32, 40, 19.00),
+#             ('2017-01-06', 52, 45, 51, 32.75),
+#         ]
+# # yapf: enable
+# expected_df = pd.DataFrame(data=data, columns=schema)
+#
+# mock_df = expected_df[['Date', 'High', 'Low', 'Close']]
+#
+# metric_col='Close'
+# low_col='Low'
+# high_col='High'
+# rolling_window=2
+# lower_band_df = maths.lower_band(df=mock_df, metric_col=metric_col, rolling_window=rolling_window)
+# upper_band_df = maths.upper_band(df=lower_band_df, metric_col=metric_col, rolling_window=rolling_window)
+# lower_keltner_df = maths.lower_keltner(df=upper_band_df, metric_col=metric_col, low_col=low_col, high_col=high_col,
+#                                  rolling_window=rolling_window)
+# upper_keltner_df = maths.upper_keltner(df=lower_keltner_df, metric_col=metric_col, low_col=low_col, high_col=high_col,
+#                                  rolling_window=rolling_window)
+#
+# def is_squeeze(df):
+#     return df['lower_band'].iloc[-3] > df['lower_keltner'].iloc[-3] and df['upper_band'].iloc[-3] < df['upper_keltner'].iloc[-3]
+#
+# is_squeeze(df=upper_keltner_df)
+#
+# actual = maths.is_in_squeeze(df=mock_df, metric_col='Close', low_col='Low', high_col='High', rolling_window=2)
+# actual
+#
+# assert actual == False
+#
 
