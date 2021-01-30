@@ -3,8 +3,8 @@
 # --------
 class Alpaca:
     # TODO: Turn these keys into environment variables for security (fine for now as it's paper wsbtrading)
-    api_key = 'PK2TECTJURINF9NGBQT8'
-    secret_key = 'q4JCbfISvU3Gq6sLY2dnAr95fs1Ljnut8z3peNw1'
+    api_key = 'PK847B96RX8C9GJ3AMO7'
+    secret_key = '3ZdZzKEXYwJQxQtq7JNK0KDeatZXzvQSvAwZPuqh'
 
     headers = {
         'APCA-API-KEY-ID': api_key,
@@ -19,14 +19,14 @@ class Alpaca:
             'base_url': 'https://api.alpaca.markets',
             'sub_urls': {
                 'account_url': f'{live_trading_url}/v2/account',
-                'order': f'{live_trading_url}/v2/order',
+                'order_url': f'{live_trading_url}/v2/orders',
             }
         },
         'paper_trading': {
             'base_url': 'https://paper-api.alpaca.markets',
             'sub_urls': {
                 'account_url': f'{paper_trading_url}/v2/account',
-                'order': f'{paper_trading_url}/v2/order',
+                'order_url': f'{paper_trading_url}/v2/orders',
             }
         }
     }
