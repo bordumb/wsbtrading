@@ -2,20 +2,11 @@ import requests
 import json
 from typing import Dict, Any
 
-# TODO: Turn these keys into environment variables for security (fine for now as it's paper wsbtrading)
-API_KEY = 'PK2TECTJURINF9NGBQT8'
-SECRET_KEY = 'q4JCbfISvU3Gq6sLY2dnAr95fs1Ljnut8z3peNw1'
-
-BASE_URL = 'https://paper-api.alpaca.markets'
-ACCOUNT_URL = f'{BASE_URL}/v2/account'
-ORDERS_URL = f'{BASE_URL}/v2/order'
-HEADERS = {
-    'APCA-API-KEY-ID': API_KEY,
-    'APCA-API-SECRET-KEY': SECRET_KEY,
-}
+from wsbtrading.instrumentation import Alpaca as iAlpaca
 
 
-def execute_order(stock_ticker: str, qty: int, side: str, type: str, time_in_force: str) -> Dict[str, Any]:
+def execute_order(stock_ticker: str, qty: int, side: str, type: str, time_in_force: str, trading_type: str) \
+        -> Dict[str, Any]:
     """Configures and executes an order.
 
     Args:
@@ -24,6 +15,7 @@ def execute_order(stock_ticker: str, qty: int, side: str, type: str, time_in_for
         side: allows you to choose 'buy', 'sell' side (i.e. buying shares or selling them)
         type: possible values for ``type`` are 'market', 'limit', 'stop', 'stop_limit', 'trailing_stop'
         time_in_force: possible values are 'day', 'gtc', 'opg', 'cls', 'ioc', 'fok'. For more info check
+        trading_type: denotes live versus paper trading
         [here](https://alpaca.markets/docs/trading-on-alpaca/orders/#time-in-force)
 
     Returns:
@@ -33,9 +25,18 @@ def execute_order(stock_ticker: str, qty: int, side: str, type: str, time_in_for
 
     .. code-block:: python
 
-        from wsbtrading.order import execute_order
-        execute_order(symbol='AAPL', qty=100, side='buy', type='market', time_in_force='gtc')
+        from wsbtrading.order import order
+        order.execute_order(
+            stock_ticker='TSLA',
+            qty=10,
+            side='buy',
+            type='market',
+            time_in_force='gtc',
+            trading_type='paper_trading'
+        )
     """
+    order_url = iAlpaca.api_call[trading_type]['sub_urls']['order_url']
+    headers = iAlpaca.headers
     # TODO: add support for more complex order types (https://alpaca.markets/docs/trading-on-alpaca/orders/#bracket-orders)
     data = {
         "symbol": stock_ticker,
@@ -45,13 +46,16 @@ def execute_order(stock_ticker: str, qty: int, side: str, type: str, time_in_for
         "time_in_force": time_in_force
     }
 
-    r = requests.post(ORDERS_URL, json=data, headers=HEADERS)
+    r = requests.post(url=order_url, json=data, headers=headers)
 
     return json.loads(r.content)
 
 
-def get_orders():
-    """Returns a JSON blog of open order.
+def get_orders(trading_type: str) -> Dict[str, Any]:
+    """Returns a JSON blog of open order(s).
+
+    Args:
+        trading_type: denotes live versus paper trading
 
     Returns:
     .. code-block:
@@ -72,9 +76,12 @@ def get_orders():
 
     .. code-block:: python
 
-        from wsbtrading.order import get_orders
-        get_orders()
+        from wsbtrading.order import order
+        order.get_orders(trading_type='paper_trading')
     """
-    r = requests.get(ORDERS_URL, headers=HEADERS)
+    order_url = iAlpaca.api_call[trading_type]['sub_urls']['order_url']
+    headers = iAlpaca.headers
+
+    r = requests.get(order_url, headers=headers)
 
     return json.loads(r.content)
