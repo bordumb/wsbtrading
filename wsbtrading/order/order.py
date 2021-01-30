@@ -8,40 +8,11 @@ SECRET_KEY = 'q4JCbfISvU3Gq6sLY2dnAr95fs1Ljnut8z3peNw1'
 
 BASE_URL = 'https://paper-api.alpaca.markets'
 ACCOUNT_URL = f'{BASE_URL}/v2/account'
-ORDERS_URL = f'{BASE_URL}/v2/orders'
+ORDERS_URL = f'{BASE_URL}/v2/order'
 HEADERS = {
     'APCA-API-KEY-ID': API_KEY,
     'APCA-API-SECRET-KEY': SECRET_KEY,
 }
-
-
-def get_account():
-    """Returns a JSON blog of open orders.
-
-    Returns:
-    .. code-block:
-
-        {'id': '7f8378b3-84b2-4d4d-8b91-d182aee8945a', 'account_number': 'PA31K6O18XZ4', 'status': 'ACTIVE',
-         'currency': 'USD', 'buying_power': '385964', 'regt_buying_power': '185964',
-         'daytrading_buying_power': '385964', 'cash': '100000', 'portfolio_value': '100000',
-         'pattern_day_trader': False, 'trading_blocked': False, 'transfers_blocked': False, 'account_blocked': False,
-         'created_at': '2021-01-22T01:28:41.55866Z', 'trade_suspended_by_user': False, 'multiplier': '4',
-         'shorting_enabled': True, 'equity': '100000', 'last_equity': '100000', 'long_market_value': '0',
-         'short_market_value': '0', 'initial_margin': '7018', 'maintenance_margin': '0', 'last_maintenance_margin': '0',
-         'sma': '0', 'daytrade_count': 0}
-
-    More info [here](https://alpaca.markets/docs/api-documentation/api-v2/account/)
-
-    **Example**
-
-    .. code-block:: python
-
-        from wsbtrading.orders import get_account
-        get_account()
-    """
-    r = requests.get(ACCOUNT_URL, headers=HEADERS)
-
-    return json.loads(r.content)
 
 
 def execute_order(stock_ticker: str, qty: int, side: str, type: str, time_in_force: str) -> Dict[str, Any]:
@@ -62,7 +33,7 @@ def execute_order(stock_ticker: str, qty: int, side: str, type: str, time_in_for
 
     .. code-block:: python
 
-        from wsbtrading.orders import execute_order
+        from wsbtrading.order import execute_order
         execute_order(symbol='AAPL', qty=100, side='buy', type='market', time_in_force='gtc')
     """
     # TODO: add support for more complex order types (https://alpaca.markets/docs/trading-on-alpaca/orders/#bracket-orders)
@@ -80,7 +51,7 @@ def execute_order(stock_ticker: str, qty: int, side: str, type: str, time_in_for
 
 
 def get_orders():
-    """Returns a JSON blog of open orders.
+    """Returns a JSON blog of open order.
 
     Returns:
     .. code-block:
@@ -101,7 +72,7 @@ def get_orders():
 
     .. code-block:: python
 
-        from wsbtrading.orders import get_orders
+        from wsbtrading.order import get_orders
         get_orders()
     """
     r = requests.get(ORDERS_URL, headers=HEADERS)
