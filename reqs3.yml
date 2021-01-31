@@ -32,3 +32,4 @@ dependencies:
       - versioneer
       - websocket-client
       - ta-lib
+      - alpaca_trade_api
