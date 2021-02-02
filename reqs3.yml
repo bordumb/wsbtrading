@@ -33,3 +33,4 @@ dependencies:
       - websocket-client
       - ta-lib
       - alpaca_trade_api
+      - yfinance
