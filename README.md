@@ -127,6 +127,28 @@ To activate our virtual env:
 conda activate trading3
 ```
 
+### Pushing updates to PyPi
+Anytime any changes are made to the ``wsbtrading`` library, a new wheel package must be made and updates.
+
+1. Delete all files in the `/dist` folder
+```bash
+cd dist
+rm -rf *
+```
+2. Update the ``__version`` in the ``wsbtrading/__init__.py`` file, by increasing the number 1 integer higher 
+```bash
+cd wsbtrading
+open __init__.py
+```
+3. Rebuild the wheel
+```bash
+python3 setup.py sdist bdist_wheel
+```
+4. Upload this latest package to PyPi
+```bash 
+twine upload dist/*
+```
+
 # Open Questions
 The following are a list of topics that are not fully baked out and largely pertain to tooling choices.
 

@@ -1,12 +1,13 @@
+import os
 import pandas as pd
 from datetime import datetime
 
-from typing import List, Optional, Union
-
 from wsbtrading.data_io import data_io
 from wsbtrading.instrumentation import AlphaAdvantage as iAlphaAdvantage
+from wsbtrading.data_io import snapshot_daily
 
 today_date = datetime.today().strftime('%Y-%m-%d')
+CSV = data_io.CSV
 
 
 def pull_company_listing_status() -> 'pd.DataFrame':
@@ -27,15 +28,12 @@ def pull_company_listing_status() -> 'pd.DataFrame':
     """
     api_key = iAlphaAdvantage.api_key
     appended_data = []
-
     for state in ['delisted', 'listed']:
         api_url = f'https://www.alphavantage.co/query?function=LISTING_STATUS&state={state}&apikey={api_key}'
         df = pd.read_csv(f'{api_url}')
         appended_data.append(df)
-
     df = pd.concat(appended_data)
     df['date_created'] = today_date
-
     return df
 
 
@@ -53,7 +51,8 @@ def main():
     # --------
     # Write  |
     # --------
-    pandas_df.to_csv(f'data/snapshot/stock_ticker_list/daily/date={today_date}.csv')
+    pandas_df.to_csv(f'./data/prod/stock_tickers/daily/date={today_date}/file.csv')
+
     # path_to_write = data_io.generate_path_to_write(environment='prod',
     #                                                granularity='daily',
     #                                                dataset_name='stock_ticker_list')

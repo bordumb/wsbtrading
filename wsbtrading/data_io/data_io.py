@@ -1,10 +1,26 @@
 import os
 from datetime import datetime
-from typing import Optional
+from typing import Optional, List
+from abc import abstractmethod
+import csv
 
 import alpaca_trade_api as tradeapi
 
 from wsbtrading.instrumentation import Alpaca as iAlpaca
+
+
+class CSV:
+    @abstractmethod
+    def writerow(self, row: List[str]) -> None:
+        pass
+
+    @abstractmethod
+    def writerows(self, rows: List[List[str]]) -> None:
+        pass
+
+    @abstractmethod
+    def dialect(self) -> csv.Dialect:
+        pass
 
 
 def alpaca_rest_api_conn(trading_type: str):
