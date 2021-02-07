@@ -1,9 +1,4 @@
-import config
-import websocket
-import json
-
 import alpaca_trade_api as tradeapi
-import requests
 
 from wsbtrading.instrumentation import Alpaca as iAlpaca
 
@@ -33,6 +28,11 @@ def alpaca_rest_api_conn(trading_type: str):
 
     return tradeapi.REST(api_key, secret_key, base_url=base_url)
 
+
+# import config
+# import websocket
+# import json
+# import requests
 
 # def on_open(ws):
 #     print("opened")
