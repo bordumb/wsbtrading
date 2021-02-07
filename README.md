@@ -148,6 +148,10 @@ python3 setup.py sdist bdist_wheel
 ```bash 
 twine upload dist/*
 ```
+5. Updating your local package
+```bash 
+pip install wsbtrading --upgrade
+```
 
 # Open Questions
 The following are a list of topics that are not fully baked out and largely pertain to tooling choices.
