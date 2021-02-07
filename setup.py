@@ -41,7 +41,7 @@ DISTNAME = 'wsbtrading'
 DESCRIPTION = """wsbtrading is a library that handles data I/O, aggregation,
 and modeling to facilitate algorithmic trading stategies."""
 MAINTAINER = 'bordumb'
-MAINTAINER_EMAIL = 'DM me here or on Reddit: @bordumb'
+# MAINTAINER_EMAIL = 'DM me here or on Reddit: @bordumb'
 AUTHOR = 'bordumb'
 AUTHOR_EMAIL = 'DM me here or on Reddit: @bordumb'
 URL = "https://github.com/bordumb/wsbtrading"
@@ -61,7 +61,7 @@ if __name__ == "__main__":
         name=DISTNAME,
         version=version,
         maintainer=MAINTAINER,
-        maintainer_email=MAINTAINER_EMAIL,
+        # maintainer_email=MAINTAINER_EMAIL,
         description='wsbtrading is a library that handles data I/O, aggregation, and modeling to facilitate algorithmic trading stategies.',
         long_description=DESCRIPTION,
         license=LICENSE,
