@@ -130,10 +130,12 @@ conda activate trading3
 ### Pushing updates to PyPi
 Anytime any changes are made to the ``wsbtrading`` library, a new wheel package must be made and updates.
 
-1. Delete all files in the `/dist` folder
+1. Delete all files in the `/dist` folder and the entire `build` directory
 ```bash
 cd dist
 rm -rf *
+cd .. 
+rm -rf build
 ```
 2. Update the ``__version`` in the ``wsbtrading/__init__.py`` file, by increasing the number 1 integer higher 
 ```bash
