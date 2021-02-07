@@ -7,7 +7,7 @@ dependencies:
   - typing
   - pandas
   - python=3.6.9
-  - pyspark=2.4.5
+  - pyspark=3.0.1
   - boto3
   - openjdk=8.0.152
   - pip:
