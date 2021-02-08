@@ -102,7 +102,7 @@ def main():
                                                 end_date=end_date)
         # df = pull_company_prices_daily_alpha_advantage(stock_ticker=stock_ticker)
 
-        df.to_csv(f'../data/prod/stock_prices/daily/{stock_ticker}_{start_date}_{end_date}.csv')
+        df.to_csv(f'../../data/prod/stock_prices/daily/{stock_ticker}_{start_date}_{end_date}.csv')
 
 
 if __name__ == '__main__':

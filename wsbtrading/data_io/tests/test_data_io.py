@@ -17,6 +17,17 @@ class TestAlpacaApiConnection(unittest.TestCase):
         AlpacaApiConnMock.assert_called_with(trading_type='paper_trading')
 
 
+class TestPostgresConnection(unittest.TestCase):
+    @patch.object(data_io, 'postgres_conn')
+    def test_postgres_conn(self, PostgresConnMock: Mock):
+        postgres_conn_mock = Mock()
+        PostgresConnMock.return_value = postgres_conn_mock
+
+        data_io.postgres_conn()
+
+        PostgresConnMock.assert_called_with()
+
+
 class TestGeneratePathToWrite(unittest.TestCase):
     """Ensures path is built correctly."""
     def test_generate_path_to_write(self):

@@ -53,7 +53,7 @@ def main():
     # --------
     # Write  |
     # --------
-    pandas_df.to_csv(f'../data/prod/stock_tickers/daily/date={today_date}/file.csv')
+    pandas_df.to_csv(f'../../data/prod/stock_tickers/daily/date={today_date}/file.csv')
 
     # path_to_write = data_io.generate_path_to_write(environment='prod',
     #                                                granularity='daily',
