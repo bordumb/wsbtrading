@@ -82,7 +82,7 @@ def pull_company_prices_daily_yfinance(stock_ticker: str, start_date: str, end_d
     return pd.concat(appended_data)
 
 
-# TODO: Add a similar function for alpaca api andhandle json -> (pandas df) -> csv
+# TODO: Add a similar function for alpaca api and handle json -> (pandas df) -> csv
 
 def main():
     # -------
