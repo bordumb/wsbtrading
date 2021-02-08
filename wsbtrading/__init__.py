@@ -1,4 +1,4 @@
-__version__ = '1.0.0a08'
+__version__ = '1.0.0a09'
 
 __doc__ = """wsbtrading is a library that handles data I/O, aggregation, and modeling to facilitate algorithmic trading stategies."""
 
