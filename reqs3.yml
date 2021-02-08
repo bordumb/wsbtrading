@@ -34,3 +34,5 @@ dependencies:
       - ta-lib
       - alpaca_trade_api
       - yfinance
+      - wsbtrading
+      - psycopg2
