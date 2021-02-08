@@ -3,6 +3,7 @@ from datetime import datetime
 from typing import Optional, List
 from abc import abstractmethod
 import csv
+import psycopg2
 
 import alpaca_trade_api as tradeapi
 
@@ -49,6 +50,36 @@ def alpaca_rest_api_conn(trading_type: str):
     return tradeapi.REST(api_key, secret_key, base_url=base_url)
 
 
+def postgres_conn(database: str = 'wsb_trading_db',
+            user: str = 'brian',
+            password: str = '',
+            host: str = '127.0.0.1',
+            port: str = '5432'):
+    """Creates the initial connection to Postgres.
+
+    Args:
+        database: denotes live versus paper trading
+        user: the user to sign in as
+        password: the password to sign in with
+        host: the host URL
+        port: the port number
+
+    Returns:
+        a Postgres connection
+
+    **Example**
+
+    .. code-block:: python
+
+        from wsbtrading.data_io import data_io
+        postgres_conn = data_io.postgres_conn()
+    """
+    conn = psycopg2.connect(database=database, user=user, password=password, host=host, port=port)
+    cur = conn.cursor()
+
+    return conn, cur
+
+
 def generate_path_to_write(environment: str,
                            granularity: str,
                            dataset_name: str,
@@ -91,7 +122,6 @@ def generate_path_to_write(environment: str,
     timestamp = timestamp or datetime.utcnow().strftime('%Y-%m-%d_%H-%M-%S')
 
     return os.path.join(root_path, environment, granularity, dataset_name, timestamp)
-
 
 # https://docs.databricks.com/spark/latest/spark-sql/spark-pandas.html
 # Enable Arrow-based columnar data transfers
