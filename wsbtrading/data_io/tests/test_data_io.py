@@ -47,18 +47,18 @@ class TestGeneratePathToWrite(unittest.TestCase):
         # Write to another base path
         actual = data_io.generate_path_to_write(environment='prod',
                                                 granularity='daily',
-                                                dataset_name='stock_prices',
+                                                dataset_name='share_prices',
                                                 root_path='/user/bdeely/',
                                                 timestamp='version_1')
-        assert actual == '/user/bdeely/prod/daily/stock_prices/version_1'
+        assert actual == '/user/bdeely/prod/daily/share_prices/version_1'
 
         # Extra slash at end of base path
         actual = data_io.generate_path_to_write(environment='prod',
                                                 granularity='daily',
-                                                dataset_name='stock_prices',
+                                                dataset_name='share_prices',
                                                 root_path='/user/bdeely/',
                                                 timestamp='version_1')
-        assert actual == '/user/bdeely/prod/daily/stock_prices/version_1'
+        assert actual == '/user/bdeely/prod/daily/share_prices/version_1'
 
         # Spaces and caps in project name
         actual = data_io.generate_path_to_write(environment='prod',

@@ -4,10 +4,12 @@ from typing import Optional, List
 from abc import abstractmethod
 import csv
 import psycopg2
+import quandl
 
 import alpaca_trade_api as tradeapi
 
 from wsbtrading.instrumentation import Alpaca as iAlpaca
+from wsbtrading.instrumentation import Quandl as iQuandl
 
 
 class CSV:
@@ -24,6 +26,28 @@ class CSV:
         pass
 
 
+def quandl_api():
+    """Creates the initial connection to Quandl API.
+
+    Args:
+        subscription: denotes subscription API to connect to
+
+    Returns:
+        an API connection to Alpaca
+
+    **Example**
+
+    .. code-block:: python
+
+        import quandl
+        from wsbtrading import data_io
+
+        data_io.quandl_api()
+        quandl.get_table('SHARADAR/SEP', date='2013-03-15', ticker='ZZ')
+    """
+    quandl.ApiConfig.api_key = iQuandl.api_key
+
+
 def alpaca_rest_api_conn(trading_type: str):
     """Creates the initial connection to Alpaca API.
 
@@ -33,14 +57,11 @@ def alpaca_rest_api_conn(trading_type: str):
     Returns:
         an API connection to Alpaca
 
-    Note:
-        this may create many files on your computer
-
     **Example**
 
     .. code-block:: python
 
-        from wsbtrading.data_io import data_io
+        from wsbtrading import data_io
         alpaca_api = data_io.alpaca_rest_api_conn(trading_type='paper_trading')
     """
     api_key = iAlpaca.api_key
@@ -50,9 +71,9 @@ def alpaca_rest_api_conn(trading_type: str):
     return tradeapi.REST(api_key, secret_key, base_url=base_url)
 
 
-def postgres_conn(database: str = 'wsb_trading_db',
-            user: str = 'brian',
-            password: str = '',
+def postgres_conn(database: str = 'wsbtrading',
+            user: str = 'postgres',
+            password: str = 'postgres',
             host: str = '127.0.0.1',
             port: str = '5432'):
     """Creates the initial connection to Postgres.
@@ -71,7 +92,7 @@ def postgres_conn(database: str = 'wsb_trading_db',
 
     .. code-block:: python
 
-        from wsbtrading.data_io import data_io
+        from wsbtrading import data_io
         postgres_conn = data_io.postgres_conn()
     """
     conn = psycopg2.connect(database=database, user=user, password=password, host=host, port=port)
