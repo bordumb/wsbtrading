@@ -87,8 +87,8 @@ def create_database(admin_user='postgres', admin_password='postgres',
 def data_tables(database='wsbtrading', user='postgres',
                 password='postgres', host='localhost', port=5432):
 
-    conn = psycopg2.connect(database=database, user=user, password=password,
-                            host=host, port=port)
+    conn = psycopg2.connect(database=database, user=user, password=password, host=host, port=port)
+
     try:
         with conn:
             cur = conn.cursor()
@@ -100,15 +100,31 @@ def data_tables(database='wsbtrading', user='postgres',
                         ticker	    TEXT,
                         date	    TIMESTAMP WITH TIME ZONE    NOT NULL,
                         lastupdated	TIMESTAMP WITH TIME ZONE,
-                        ev	        DECIMAL(11,4),
-                        evebit	    DECIMAL(11,4),
-                        evebitda    DECIMAL(11,4),
-                        marketcap	DECIMAL(40,4),
-                        pbook	    DECIMAL(11,4),
-                        pearnings   DECIMAL(11,4),
-                        psales      DECIMAL(11,4)
+                        ev	        TEXT,
+                        evebit	    TEXT,
+                        evebitda    TEXT,
+                        marketcap	TEXT,
+                        pbook	    TEXT,
+                        pearnings   TEXT,
+                        psales      TEXT
                     )
                 """)
+                # This is ideal, but breaks on import ERROR: COPY fundamentals_daily, line 2, column ps: ""
+                # c.execute("""
+                #     CREATE TABLE IF NOT EXISTS fundamentals_daily
+                #     (
+                #         ticker	    TEXT,
+                #         date	    TIMESTAMP WITH TIME ZONE    NOT NULL,
+                #         lastupdated	TIMESTAMP WITH TIME ZONE,
+                #         ev	        DECIMAL(40,4),
+                #         evebit	    DECIMAL(40,4),
+                #         evebitda    DECIMAL(40,4),
+                #         marketcap	DECIMAL(40,4),
+                #         pbook	    DECIMAL(40,4),
+                #         pearnings   DECIMAL(40,4),
+                #         psales      DECIMAL(40,4)
+                #     )
+                # """)
 
             def share_prices_daily(c):
                 c.execute("""
@@ -127,8 +143,45 @@ def data_tables(database='wsbtrading', user='postgres',
                     )
                 """)
 
+
+            def stock_tickers(c):
+                c.execute("""
+                    CREATE TABLE IF NOT EXISTS stock_tickers
+                    (
+                        table_nickname	    TEXT,
+                        permaticker         INTEGER,
+                        ticker	            TEXT,
+                        company_name	    TEXT,
+                        exchange	        TEXT,
+                        isdelisted	        TEXT,
+                        category	        TEXT,
+                        cusips	            TEXT,
+                        siccode	            TEXT,
+                        sicsector	        TEXT,
+                        sicindustry	        TEXT,
+                        famasector	        TEXT,
+                        famaindustry	    TEXT,
+                        sector	            TEXT,
+                        industry	        TEXT,
+                        scalemarketcap	    TEXT,
+                        scalerevenue	    TEXT,
+                        relatedtickers	    TEXT,
+                        currency	        TEXT,
+                        location	        TEXT,
+                        lastupdated	        TEXT,
+                        firstadded	        TEXT,
+                        firstpricedate	    DATE,
+                        lastpricedate	    DATE,
+                        firstquarter	    DATE,
+                        lastquarter	        DATE,
+                        secfilings	        TEXT,
+                        companysite         TEXT
+                    )
+                """)
+
             fundamentals_daily(cur)
             share_prices_daily(cur)
+            stock_tickers(cur)
 
             conn.commit()
             cur.close()

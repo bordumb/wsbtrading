@@ -6,7 +6,7 @@ from wsbtrading.data_io import data_io
 
 conn, cur = data_io.postgres_conn()
 
-csv_path = f'../../data/prod/stock_tickers/daily/date=2021-02-07/file.csv'
+csv_path = f'../data/prod/stock_tickers/daily/date=2021-02-07/file.csv'
 
 
 def get_table_field_names(table_name: str):
