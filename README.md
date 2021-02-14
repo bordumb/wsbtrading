@@ -132,6 +132,7 @@ Anytime any changes are made to the ``wsbtrading`` library, a new wheel package 
 
 1. Delete all files in the `/dist` folder and the entire `build` directory
 ```bash
+rm -rf *egg-info*
 cd dist
 rm -rf *
 cd .. 

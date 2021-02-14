@@ -39,3 +39,12 @@ class Alpaca:
 class AlphaAdvantage:
     # TODO: Turn these keys into environment variables for security (fine for now as it's paper wsbtrading)
     api_key = 'XQ6PZ3J5YFU4VRIS'
+
+
+# --------
+# Quandl |
+# --------
+class Quandl:
+    # TODO: Turn these keys into environment variables for security (fine for now as it's paper wsbtrading)
+    api_key = 'xqq66bfL2zy6ijycPEWd'
+

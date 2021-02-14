@@ -4,10 +4,14 @@ from typing import Optional, List
 from abc import abstractmethod
 import csv
 import psycopg2
+import quandl
+import numpy as np
+import pandas as pd
 
 import alpaca_trade_api as tradeapi
 
 from wsbtrading.instrumentation import Alpaca as iAlpaca
+from wsbtrading.instrumentation import Quandl as iQuandl
 
 
 class CSV:
@@ -24,6 +28,28 @@ class CSV:
         pass
 
 
+def quandl_api():
+    """Creates the initial connection to Quandl API.
+
+    Args:
+        subscription: denotes subscription API to connect to
+
+    Returns:
+        an API connection to Alpaca
+
+    **Example**
+
+    .. code-block:: python
+
+        import quandl
+        from wsbtrading import data_io
+
+        data_io.quandl_api()
+        quandl.get_table('SHARADAR/SEP', date='2013-03-15', ticker='ZZ')
+    """
+    quandl.ApiConfig.api_key = iQuandl.api_key
+
+
 def alpaca_rest_api_conn(trading_type: str):
     """Creates the initial connection to Alpaca API.
 
@@ -33,14 +59,11 @@ def alpaca_rest_api_conn(trading_type: str):
     Returns:
         an API connection to Alpaca
 
-    Note:
-        this may create many files on your computer
-
     **Example**
 
     .. code-block:: python
 
-        from wsbtrading.data_io import data_io
+        from wsbtrading import data_io
         alpaca_api = data_io.alpaca_rest_api_conn(trading_type='paper_trading')
     """
     api_key = iAlpaca.api_key
@@ -50,9 +73,9 @@ def alpaca_rest_api_conn(trading_type: str):
     return tradeapi.REST(api_key, secret_key, base_url=base_url)
 
 
-def postgres_conn(database: str = 'wsb_trading_db',
-            user: str = 'brian',
-            password: str = '',
+def postgres_conn(database: str = 'wsbtrading',
+            user: str = 'postgres',
+            password: str = 'postgres',
             host: str = '127.0.0.1',
             port: str = '5432'):
     """Creates the initial connection to Postgres.
@@ -71,7 +94,7 @@ def postgres_conn(database: str = 'wsb_trading_db',
 
     .. code-block:: python
 
-        from wsbtrading.data_io import data_io
+        from wsbtrading import data_io
         postgres_conn = data_io.postgres_conn()
     """
     conn = psycopg2.connect(database=database, user=user, password=password, host=host, port=port)
@@ -122,6 +145,93 @@ def generate_path_to_write(environment: str,
     timestamp = timestamp or datetime.utcnow().strftime('%Y-%m-%d_%H-%M-%S')
 
     return os.path.join(root_path, environment, granularity, dataset_name, timestamp)
+
+
+def _get_table_field_names(table_name: str) -> List[str]:
+    """Queries the field names of a given table.
+
+    Args:
+        table_name: the name of the table to query
+
+    Returns:
+        a list of column names
+
+    **Example**
+
+    .. code-block:: python
+
+        from phobos import data_io
+        column_list = data_io._get_table_field_names(table_name='company_listing_status')
+    """
+    conn, cur = postgres_conn()
+    try:
+        cur.execute(f'Select * FROM {table_name} LIMIT 0')
+        col_names = [desc[0] for desc in cur.description]
+    except psycopg2.Error as e:
+        print(f'error: {e}')
+
+    return col_names
+
+
+def _convert_empty_strings_to_null(df: 'pd.DataFrame') -> 'pd.DataFrame':
+    """Converts all NaN or '' values in a dataframe to None for insertion into Postgres.
+
+    Args:
+        df: the dataframe to cleanup
+
+    **Example**
+
+    .. code-block:: python
+
+        from phobos import data_io
+        df = data_io._convert_empty_strings_to_null(df=df)
+    """
+    return df.replace({np.nan: None})
+
+
+def insert_csv_to_sql(table_name: str, csv_path: str, delimiter: str = ','):
+    """Given a SQL table.
+
+    Args:
+        table_name: the name of the table to query
+        csv_path: the path to the data file to import
+        delimiter: the type of delimiter for the file
+
+    **Example**
+
+    .. code-block:: python
+
+        from phobos import data_io
+        data_io.insert_csv_to_sql(table_name='company_listing_status', csv_path='../file.csv')
+    """
+    col_names = _get_table_field_names(table_name=table_name)
+    conn, cur = postgres_conn()
+
+    try:
+        df = pd.read_csv(csv_path, index_col=0)
+        df = _convert_empty_strings_to_null(df=df)
+        df.to_csv('clean_csv.csv')
+        csv_contents = open('clean_csv.csv', 'r')
+        next(csv_contents)
+    except psycopg2.Error as e:
+        print(f'error: {e}')
+
+    try:
+        cur.copy_from(file=csv_contents,
+                      table=table_name,
+                      columns=col_names,
+                      sep=delimiter)
+        conn.commit()
+        cur.close()
+        conn.close()
+        print("Success!")
+    except psycopg2.Error as e:
+        print(f'error: {e}')
+
+
+
+
+
 
 # https://docs.databricks.com/spark/latest/spark-sql/spark-pandas.html
 # Enable Arrow-based columnar data transfers

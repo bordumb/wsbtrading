@@ -117,3 +117,42 @@ def date_slider(date: str, days_to_add: int) -> str:
         # '2020-01-08'
     """
     return (datetime.strptime(date, '%Y-%m-%d') + timedelta(days=days_to_add)).strftime('%Y-%m-%d')
+
+
+import datetime
+import pandas as pd
+import time
+
+def is_business_day(date):
+    """Tells us whether a given date is a business day or note
+
+    Note:
+        useful for when we want to see if trading is possible on some given day
+
+    Args:
+        date: the date to be query
+
+    Returns:
+        0 for weekends, 1 for weekdays
+
+    **Example**
+
+    .. code-block:: python
+
+        from wsbtrading.utils import dates
+        dates.is_business_day(date='2020-01-01', '2020-01-01)
+        # '2020-01-08'
+    """
+    return bool(len(pd.bdate_range(date, date)))
+
+    date.isin(holidays)
+
+import pandas as pd
+from pandas.tseries.holiday import USFederalHolidayCalendar as calendar
+
+date='2020-01-01'
+cal = calendar()
+holidays = cal.holidays(start=date, end=date)
+date == holidays
+
+is_business_day(date='2020-01-01')
