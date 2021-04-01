@@ -130,15 +130,11 @@ conda activate trading3
 ### Pushing updates to PyPi
 Anytime any changes are made to the ``wsbtrading`` library, a new wheel package must be made and updates.
 
-1. Delete all files in the `/dist` folder and the entire `build` directory
+1. Running the following from the root directory, which will handle cleaning up all previous builds and related files.
 ```bash
-rm -rf *egg-info*
-cd dist
-rm -rf *
-cd .. 
-rm -rf build
+sh dev-build.sh
 ```
-2. Update the ``__version`` in the ``wsbtrading/__init__.py`` file, by increasing the number 1 integer higher 
+2. Update the ``__version__`` in the ``wsbtrading/__init__.py`` file, by increasing the number 1 integer higher 
 ```bash
 cd wsbtrading
 open __init__.py
@@ -208,12 +204,6 @@ Trading platforms are TBD
 
 ### Options Trading
 * [Lightspeed Trading](https://www.lightspeed.com/trading-api/)
-
-## Ensemble Strategy
-Our purpose is to create a highly robust trading strategy. So we use an ensemble method to automatically select the best performing agent among PPO, A2C, and DDPG to trade based on the Sharpe ratio. The ensemble process is described as follows:
-* __Step 1__. We use a growing window of 𝑛 months to retrain our three agents concurrently. In this paper we retrain our three agents at every 3 months.
-* __Step 2__. We validate all 3 agents by using a 12-month validation- rolling window followed by the growing window we used for train- ing to pick the best performing agent which has the highest Sharpe ratio. We also adjust risk-aversion by using turbulence index in our validation stage.
-* __Step 3__. After validation, we only use the best model which has the highest Sharpe ratio to predict and trade for the next quarter.
 
 ## Performance
 TODO: Add performance reporting
