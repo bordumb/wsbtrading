@@ -3,6 +3,8 @@
 # Wall Street Bets Algorithmic Trading
 This is a pet project to try using an ensemble strategy for online, algorithmic trading.
 
+It was started around mid-January 2021, partly as a nod to the insanity going on on [Reddit trading](https://en.wikipedia.org/wiki/GameStop_short_squeeze).
+
 ``wsbtrading`` is a library that handles data I/O, aggregation, 
 and modeling to facilitate algorithmic trading strategies.
 
