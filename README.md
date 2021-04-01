@@ -4,9 +4,7 @@
 This is a pet project to try using an ensemble strategy for online, algorithmic trading.
 
 ``wsbtrading`` is a library that handles data I/O, aggregation, 
-and modeling to facilitate algorithmic trading stategies. 
-
-### The goal is simple: tendies, tendies, tendies
+and modeling to facilitate algorithmic trading strategies.
 
 This project is inspired by [this project](https://github.com/bordumb/Deep-Reinforcement-Learning-for-Automated-Stock-Trading-Ensemble-Strategy-ICAIF-2020),
 however the aim is to advance that work by adding the extending it to the following:
