@@ -10,9 +10,8 @@ and modeling to facilitate algorithmic trading stategies.
 
 This project is inspired by [this project](https://github.com/bordumb/Deep-Reinforcement-Learning-for-Automated-Stock-Trading-Ensemble-Strategy-ICAIF-2020),
 however the aim is to advance that work by adding the extending it to the following:
-* Real-time trading (the original methodology made just bi-annual trading adjustments)
-* Productionize to some environment (TBD, but probably AWS)
-* Placing real, automated trades
+* High(er) frequency trading (original paper only placed trades every few months)
+* Create a hosted front-end (TBD, but probably AWS)
 
 # User Guide
 ## Installation

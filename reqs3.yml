@@ -36,3 +36,6 @@ dependencies:
       - yfinance
       - wsbtrading
       - psycopg2
+      - python-binance
+      - web3
+      - gql
