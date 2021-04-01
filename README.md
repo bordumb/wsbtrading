@@ -176,7 +176,6 @@ Please install it if you haven't already:
 ```
 pip install pyfolio
 ```
-[Backtesting script](backtesting.ipynb)
 
 ## Data Sources
 Data sources are TBD
